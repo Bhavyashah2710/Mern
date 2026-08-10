@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shah Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #e4e4e4;
+            overflow-x: hidden;
+        }
+        .Header {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+        .Navbar {
+            position: fixed;
+            top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            z-index: 10;
+            font-family: "Roboto Mono";
+            letter-spacing: 5px;
+        }
+        .nav1, .nav2 {
+            display: flex;
+            gap: 80px;
+            margin: 0 40px;
+        }
+        .Navbar a {
+            color: #111;
+            text-decoration: none;
+        }
+        .logo, .logo2 {
+            margin-top: 150px;
+            height: 420px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+        .logo2-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            cursor: pointer;
+            position: relative;
+        }
+        .logo-text, .logo2-text {
+            display: flex;
+            font-family: "Monoton";
+            font-size: 150px;
+            line-height: 150px;
+            letter-spacing: 15px;
+        }
+        .letter {
+            letter-spacing: 0;
+            display: inline-block;
+        }
+        .space {
+            margin-right: 50px;
+        }
+        .container {
+            width: 200px;
+            height: 250px;
+            position: absolute;
+            display: none;
+            overflow: hidden;
+            border-radius: 20px;
+            z-index: 20;
+            transform-style: preserve-3d;
+            box-shadow: 0 20px 50px #555;
+            background: #000;
+        }
+        .container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .video-section {
+            width: 100%;
+            height: 600px;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+        .video-section iframe {
+            width: 100vw;
+            height: 56.25vw;
+            min-height: 100%;
+            min-width: 177.77vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .middle-text-section {
+            width: 100%;
+            padding: 100px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: #e4e4e4;
+        }
+        .middle-text-section p {
+            font-family: "Roboto Mono";
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.5;
+            color: #111;
+            max-width: 1100px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        .achievements-trigger {
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 6px;
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+        .achievement-preview-box {
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px) scale(0.9);
+            width: 260px;
+            height: 160px;
+            background: #111;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, transform 0.4s ease, width 0.4s ease, height 0.4s ease, visibility 0.4s;
+            pointer-events: none;
+            z-index: 30;
+            border: 2px solid #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .achievement-preview-box.portrait-mode {
+            width: 180px;
+            height: 250px;
+        }
+        .achievements-trigger:hover .achievement-preview-box {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0) scale(1);
+        }
+        .achievement-preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            padding: 10px;
+            background: #111;
+        }
+        .achievement-preview-box img.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .know-more-cursor {
+            position: fixed;
+            width: 120px;
+            height: 40px;
+            background: #111;
+            color: #fff;
+            font-family: "Roboto Mono";
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 99;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.6);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }   
+        .know-more-cursor.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .playground {
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+        }
+        .card {
+            width: 350px;
+            height: 250px;
+            border-radius: 30px;
+            background: #111;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            padding: 10px;
+            display: block;
+        }
+        .traverse {
+            width: 350px;
+            height: 250px;
+            position: absolute;
+            top: 125px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 30px;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            font-family: "Roboto Mono";
+            transition: .6s cubic-bezier(.7, 0, .2, 1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .3);
+            color: #111;
+            pointer-events: none;
+        }
+        .coding-journey-section {
+            width: 100%;
+            padding: 120px 8%;
+            background: #e4e4e4;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            position: relative;
+        }
+        .journey-item {
+            font-family: "Roboto Mono";
+            font-size: 42px;
+            font-weight: 700;
+            color: #111;
+            text-transform: uppercase;
+            cursor: pointer;
+            padding: 25px 0;
+            border-bottom: 2px solid #ccc;
+            transition: opacity 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .coding-journey-section:hover .journey-item {
+            opacity: 0.25;
+        }
+        .coding-journey-section .journey-item:hover {
+            opacity: 1;
+            color: #000;
+            border-bottom-color: #000;
+        }
+        /* HD LARGE PREVIEW BOX FOR CRYSTAL CLEAR IMAGE DETAILS */
+        .journey-preview-img {
+            width: 600px;
+            height: 360px;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%) scale(0.85);
+            background: #111;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+            pointer-events: none;
+            z-index: 20;
+            border: 2px solid #fff;
+        }
+        .journey-item:hover .journey-preview-img {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) scale(1);
+        }
+        .journey-preview-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+            background: #111;
+        }
+        .journey-preview-img img.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="know-more-cursor" id="knowMoreBtn">KNOW MORE</div>
+    <div class="Header">
+        <div class="Navbar">
+            <div class="nav1">
+                <a href="#">studio namma</a>
+                <a href="#">dark mode</a>
+            </div>
+            <div class="nav2">
+                <a href="#">menu</a>
+                <a href="#">let's talk</a>
+            </div>
+        </div>
+        <div class="logo">
+            <div class="logo-text">
+                <div class="letter">S</div>
+                <div class="letter">H</div>
+                <div class="letter">A</div>
+                <div class="letter space">H</div>
+                <div class="letter">I</div>
+                <div class="letter">S</div>
+            </div>
+            <div class="logo-text">
+                <div class="letter">A</div>
+                <div class="letter">L</div>
+                <div class="letter">W</div>
+                <div class="letter">A</div>
+                <div class="letter">Y</div>
+                <div class="letter">S</div>
+            </div>
+            <div class="logo-text">
+                <div class="letter">B</div>
+                <div class="letter">A</div>
+                <div class="letter">D</div>
+                <div class="letter">S</div>
+                <div class="letter">H</div>
+                <div class="letter">A</div>
+                <div class="letter">H</div>
+            </div>
+        </div>
+        <div class="container">
+            <video id="followVideo" autoplay loop muted playsinline preload="metadata">
+                <source src="./variable.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+    <div class="video-section">
+        <iframe src="https://player.vimeo.com/video/1127104834?background=1&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" title="Vimeo Video"></iframe>
+    </div>
+    <div class="middle-text-section">
+        <p>HII! My self Bhavya shah . I am a CSE student at Parul University . </p>
+        <p>Resently I started learning Web-Development and DSA . 
+            <span class="achievements-trigger">
+                My Achivements .
+                <span class="achievement-preview-box" id="previewBox">
+                    <img src="devCard.png" class="active" data-type="portrait" alt="Devcard">
+                    <img src="Development.png" data-type="landscape" alt="Development 2">
+                    <img src="profileCard.png" data-type="portrait" alt="Profile Card">
+                    <img src="DSA.png" data-type="landscape" alt="DSA">
+                </span>
+            </span>
+        </p>
+    </div>
+    <a href="https://codolio.com/profile/Bhavya_Shah" target="_blank" class="logo2-link" id="aboutMeLink">
+        <div class="logo2">
+            <div class="logo2-text">
+                <div class="letter">A</div>
+                <div class="letter">B</div>
+                <div class="letter">O</div>
+                <div class="letter">U</div>
+                <div class="letter space">T</div>
+                <div class="letter">M</div>
+                <div class="letter">E</div>
+            </div>
+        </div>
+    </a>
+    <div class="playground">
+        <div class="card">
+            <img src="profile.jpg" alt="Profile">
+        </div>
+        <div class="card">
+            <img src="img1.jpg" alt="Img 1">
+        </div>
+        <div class="traverse"></div>
+    </div>
+    <div class="coding-journey-section">
+        <div class="journey-item" id="itemJourney">
+            <span>my coding journey</span>
+            <div class="journey-preview-img">
+                <img src="DSA.png" class="active" alt="DSA">
+                <img src="Development.png" alt="Development">
+            </div>
+        </div>
+        <div class="journey-item">
+            <span>leetcode</span>
+            <div class="journey-preview-img">
+                <img src="Leet.jpg" class="active" alt="LeetCode">
+            </div>
+        </div>
+        <div class="journey-item">
+            <span>geek for geeks</span>
+            <div class="journey-preview-img">
+                <img src="gfg.jpg" class="active" alt="GeeksforGeeks">
+            </div>
+        </div>
+        <div class="journey-item">
+            <span>code chef</span>
+            <div class="journey-preview-img">
+                <img src="cc.jpg" class="active" alt="CodeChef">
+            </div>
+        </div>
+        <div class="journey-item">
+            <span>codeforce</span>
+            <div class="journey-preview-img">
+                <img src="cf.jpg" class="active" alt="Codeforces">
+            </div>
+        </div>
+    </div>
+    <script>
+        let container = document.querySelector(".container");
+        let header = document.querySelector(".Header");
+        let logo = document.querySelector(".logo");
+        let video = document.getElementById("followVideo");
+        let tempX = 0;
+        let deg = 0;
+        let resetTimer;
+        window.addEventListener("click", () => {
+            if (video) video.play();
+        });
+        header.addEventListener("mousemove", (e) => {
+            let rect = header.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            let y = e.clientY - rect.top;
+            if (x > rect.width - 200) x = rect.width - 200;
+            if (y > rect.height - 250) y = rect.height - 250;
+            container.style.left = x + "px";
+            container.style.top = y + "px";
+            container.style.display = "block";
+            if (video && video.paused) {
+                let playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {});
+                }
+            }
+            if (tempX > e.clientX) {
+                deg += 3;
+            } else {
+                deg -= 3;
+            }
+            if (deg > 70) deg = 70;
+            if (deg < -70) deg = -70;
+            container.style.transform = `perspective(600px) rotateY(${deg}deg)`;
+            tempX = e.clientX;
+            logo.style.transition = "transform 0.1s ease-out";
+            let tiltX = (window.innerWidth / 2 - e.clientX) / 30;
+            let tiltY = (window.innerHeight / 2 - e.clientY) / 30;
+            logo.style.transform = `rotateY(${-tiltX}deg) rotateX(${tiltY}deg)`;
+            clearTimeout(resetTimer);
+            resetTimer = setTimeout(() => {
+                logo.style.transition = "transform 0.8s ease";
+                logo.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            }, 1000);
+        });
+        header.addEventListener("mouseleave", () => {
+            clearTimeout(resetTimer);
+            logo.style.transition = "transform 0.6s ease";
+            logo.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            container.style.display = "none";
+        });
+        let knowMoreBtn = document.getElementById("knowMoreBtn");
+        let aboutMeLink = document.getElementById("aboutMeLink");
+        aboutMeLink.addEventListener("mousemove", (e) => {
+            knowMoreBtn.style.left = e.clientX + "px";
+            knowMoreBtn.style.top = e.clientY + "px";
+            knowMoreBtn.classList.add("active");
+        });
+        aboutMeLink.addEventListener("mouseleave", () => {
+            knowMoreBtn.classList.remove("active");
+        });
+        let playground = document.querySelector(".playground");
+        let traverse = document.querySelector(".traverse");
+        playground.addEventListener("mousemove", (e) => {
+            let rect = playground.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            if (x < rect.width / 2) {
+                traverse.style.left = "calc(50% - 195px)";
+                traverse.innerText = "FOR LINKEDIN";
+            } else {
+                traverse.style.left = "calc(50% + 195px)";
+                traverse.innerText = "FOR INSTAGRAM";
+            }
+        });
+        playground.addEventListener("mouseleave", () => {
+            traverse.style.left = "50%";
+            traverse.innerText = "";
+        });
+        let previewBox = document.getElementById("previewBox");
+        let previewImages = document.querySelectorAll(".achievement-preview-box img");
+        let currentImageIndex = 0;
+        let slideshowInterval = null;
+        function updateBoxOrientation() {
+            let currentImg = previewImages[currentImageIndex];
+            if (currentImg.getAttribute("data-type") === "portrait") {
+                previewBox.classList.add("portrait-mode");
+            } else {
+                previewBox.classList.remove("portrait-mode");
+            }
+        }
+        function startSlideshow() {
+            if (slideshowInterval !== null) return;
+            updateBoxOrientation();   
+            slideshowInterval = setInterval(() => {
+                previewImages[currentImageIndex].classList.remove("active");
+                currentImageIndex = (currentImageIndex + 1) % previewImages.length;
+                previewImages[currentImageIndex].classList.add("active");
+                updateBoxOrientation();
+            }, 1200);
+        }
+        function stopSlideshow() {
+            clearInterval(slideshowInterval);
+            slideshowInterval = null;
+            previewImages.forEach(img => img.classList.remove("active"));
+            currentImageIndex = 0;
+            previewImages[0].classList.add("active");
+            updateBoxOrientation();
+        }
+        let triggerElem = document.querySelector(".achievements-trigger");
+        triggerElem.addEventListener("mouseenter", startSlideshow);
+        triggerElem.addEventListener("mouseleave", stopSlideshow);
+        let itemJourney = document.getElementById("itemJourney");
+        let journeyImgs = itemJourney.querySelectorAll(".journey-preview-img img");
+        let journeyIndex = 0;
+        let journeyInterval = null;
+        itemJourney.addEventListener("mouseenter", () => {
+            if (journeyInterval !== null) return;
+            journeyInterval = setInterval(() => {
+                journeyImgs[journeyIndex].classList.remove("active");
+                journeyIndex = (journeyIndex + 1) % journeyImgs.length;
+                journeyImgs[journeyIndex].classList.add("active");
+            }, 1000);
+        });
+        itemJourney.addEventListener("mouseleave", () => {
+            clearInterval(journeyInterval);
+            journeyInterval = null;
+            journeyImgs.forEach(img => img.classList.remove("active"));
+            journeyIndex = 0;
+            journeyImgs[0].classList.add("active");
+        });
+    </script>
+</body>
+</html>
