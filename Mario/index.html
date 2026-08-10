@@ -2,80 +2,124 @@
 <html>
 <head>
   <style>
-    html , body {
-      width: 100%;
-      height: 80%;
-      text-align: center;
-      font-family: sans-serif;
-      background-color: #f0f0f0;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    #gameBox {
+
+    html, body {
       width: 100%;
       height: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+      user-select: none;
+    }
+
+    #gameBox {
+      width: 100vw;
+      height: 100vh;
       background-color: skyblue;
       position: relative;
-      margin: 20px auto;
-      overflow: hidden;
-      border: 3px solid black;
     }
-    #bhavya {
-      width: 30px;
-      height: 30px;
-      background-color: red; 
+
+    .ui-container {
       position: absolute;
-      bottom: 20px;
-      left: 30px;
-      border: 1px solid black;
-    }
-    .jumpUp {
-      animation: jump 1s ease-out;
-    }
-    @keyframes jump {
-      0%   { bottom: 20px; }
-      50%  { bottom: 90px; }
-      100% { bottom: 20px; }
-    }
-    #ground {
+      top: 20px;
       width: 100%;
-      height: 20px;
-      background-color: green;
-      position: absolute;
-      bottom: 0;
+      text-align: center;
+      z-index: 10;
     }
+
+    h1 {
+      color: white;
+      text-shadow: 2px 2px 4px #000;
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: #333;
+      font-weight: bold;
+    }
+
     button {
       margin-top: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
+      padding: 12px 24px;
+      font-size: 18px;
       background-color: black;
       color: yellow;
       border: 2px solid whitesmoke;
+      border-radius: 6px;
       cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+
+    #bhavyaImg {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      bottom: 40px;
+      left: 80px;
+      object-fit: contain;
+    }
+
+    .jumpUp {
+      animation: jump 1s ease-out;
+    }
+
+    @keyframes jump {
+      0%   { bottom: 40px; }
+      50%  { bottom: 220px; }
+      100% { bottom: 40px; }
+    }
+
+    #ground {
+      width: 100%;
+      height: 40px;
+      background-color: green;
+      border-top: 4px solid darkgreen;
+      position: absolute;
+      bottom: 0;
     }
   </style>
 </head>
-<body onclick="jumpMario(event)">
-  <h1>Shah Mario Game!</h1>
-  <p>Click anywhere on the screen to jump!</p>
+<body>
+
   <div id="gameBox">
-    <button id="startBtn" onclick="startGame(event)">START GAME</button>
-    <div id="bhavya"></div>
+    <div class="ui-container">
+      <h1>Wellcome to the SharioX</h1>
+      <p>Click anywhere or press Spacebar to jump!</p>
+      <button id="startBtn" onclick="startGame(event)">START GAME</button>
+    </div>
+
+    <img id="bhavyaImg" src="profile.jpg" alt="Player Image">
+
     <div id="ground"></div>
   </div>
+
   <script>
-    var mario = document.getElementById("bhavya");
+    var playerImg = document.getElementById("bhavyaImg");
     function startGame(event) {
       event.stopPropagation();
-      alert("Game Started! Now click anywhere on the page to jump!");
+      alert("Game Started! Click anywhere or press Spacebar to jump!");
     }
-    function jumpMario(event) {
-      if (event.target.tagName === 'BUTTON') return;
-      if (!mario.classList.contains("jumpUp")) {
-        mario.classList.add("jumpUp");
+    function jump() {
+      if (!playerImg.classList.contains("jumpUp")) {
+        playerImg.classList.add("jumpUp");
         setTimeout(function() {
-          mario.classList.remove("jumpUp");
+          playerImg.classList.remove("jumpUp");
         }, 1000);
       }
     }
+    window.addEventListener("click", function(event) {
+      if (event.target.tagName === 'BUTTON') return;
+      jump();
+    });
+    window.addEventListener("keydown", function(event) {
+      if (event.code === "Space" || event.code === "ArrowUp" || event.code === "Enter") {
+        jump();
+      }
+    });
   </script>
 </body>
 </html>
