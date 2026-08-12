@@ -1,0 +1,122 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: sans-serif;
+  user-select: none;
+}
+
+#gameBox {
+  width: 100vw;
+  height: 100vh;
+  background-color: skyblue;
+  position: relative;
+}
+
+.ui-container {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+}
+
+h1 {
+  color: white;
+  text-shadow: 2px 2px 4px #000;
+  margin-bottom: 5px;
+}
+
+p {
+  color: #333;
+  font-weight: bold;
+}
+
+#scoreBoard {
+  font-size: 20px;
+  margin-top: 10px;
+  color: white;
+  text-shadow: 1px 1px 3px #000;
+}
+
+button {
+  margin-top: 10px;
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: black;
+  color: yellow;
+  border: 2px solid whitesmoke;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+#bhavyaImg {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  bottom: 40px;
+  left: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.jumpUp {
+  animation: jump 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes jump {
+  0%   { bottom: 40px; }
+  50%  { bottom: 220px; }
+  100% { bottom: 40px; }
+}
+
+#obstacle {
+  width: 45px;
+  height: 60px;
+  background-color: darkred;
+  border: 2px solid black;
+  position: absolute;
+  bottom: 40px;
+  right: -60px;
+  border-radius: 4px;
+}
+
+.moveObstacle {
+  animation: obstacleMove 2s linear infinite;
+}
+
+@keyframes obstacleMove {
+  0%   { right: -60px; }
+  100% { right: 100vw; }
+}
+
+#ground {
+  width: 100%;
+  height: 40px;
+  background-color: green;
+  border-top: 4px solid darkgreen;
+  position: absolute;
+  bottom: 0;
+}
+
+.game-over-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid yellow;
+  display: none;
+  z-index: 100;
+}
