@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guest Register</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Patrick+Hand&family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/details.css">
+</head>
+<body>
+
+<div class="dust"></div>
+<div class="dust"></div>
+<div class="dust"></div>
+<div class="dust"></div>
+
+<div class="topbar">
+    <button class="btn-back" onclick="location.href='index.html'">&larr; Back</button>
+    <span style="font-family:'Patrick Hand',cursive; font-size:14px; color:var(--gold-light);">The Guest Register</span>
+</div>
+
+<h2 class="page-title">Hotel Diary</h2>
+
+<div class="search-wrap">
+    <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="Search a guest by name...">
+    </div>
+    <div class="suggestions" id="suggestions"></div>
+</div>
+
+<div class="stage">
+    <div class="diary" id="diary">
+        <div class="ribbon"></div>
+        <div class="cover"></div>
+        <div class="page-frame" id="pageFrame"></div>
+    </div>
+</div>
+
+<div class="nav-row">
+    <button class="nav-btn" id="prevBtn" title="Previous">&#8592;</button>
+    <span class="page-indicator" id="pageIndicator">Page 0 of 0</span>
+    <button class="nav-btn" id="nextBtn" title="Next">&#8594;</button>
+</div>
+
+<!-- Modal overlay -->
+<div class="overlay" id="overlay">
+    <div class="modal-box" id="modalBox"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+    <span class="dot"></span>
+    <span id="toastMsg"></span>
+</div>
+
+<script src="js/details.js"></script>
+</body>
+</html>
