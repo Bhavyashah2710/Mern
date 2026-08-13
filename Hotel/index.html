@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guest Entry</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/entry.css">
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="container">
+
+<div class="eyebrow">Front Desk</div>
+<h2>Guest Entry</h2>
+
+<form id="guestForm">
+
+<div class="field">
+<label for="name">Guest Name</label>
+<input type="text" id="name" placeholder="e.g. Aditi Sharma" required>
+</div>
+
+<div class="field">
+<label for="mobile">Mobile Number</label>
+<input type="tel" id="mobile" placeholder="e.g. 98765 43210" required>
+</div>
+
+<div class="field">
+<label for="email">Email</label>
+<input type="email" id="email" placeholder="e.g. guest@email.com" required>
+</div>
+
+<div class="check">
+    <input type="checkbox" id="checkin">
+    <label for="checkin">Check In Now</label>
+</div>
+
+<div class="field">
+<label for="room">Room Number</label>
+<input type="number" id="room" placeholder="Assigned on check-in" disabled required>
+</div>
+
+<button type="submit" class="btn-primary">
+<span class="spinner"></span><span class="btn-label">Submit</span>
+</button>
+
+</form>
+
+<div class="row-buttons">
+<button class="btn-secondary" onclick="location.href='details.html'">See Details</button>
+<button class="btn-danger" onclick="clearData()">Clear Data</button>
+</div>
+
+</div>
+
+<!-- Modal overlay (confirm / success / error) -->
+<div class="overlay" id="overlay">
+    <div class="modal-box" id="modalBox"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+    <span class="dot"></span>
+    <span id="toastMsg"></span>
+</div>
+
+<script src="js/entry.js"></script>
+</body>
+</html>
