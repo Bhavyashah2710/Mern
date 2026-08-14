@@ -1,1 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
+    body {
+      background-color: #f5f7fb;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      color: #222;
+    }
+
+    .project-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .folder-card {
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 25px 35px;
+      text-decoration: none;
+      color: #333;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+      min-width: 200px;
+    }
+
+    .folder-card:hover {
+      background-color: #007bff;
+      color: #ffffff;
+      border-color: #007bff;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Projects Hub</h1>
+
+  <div class="project-grid">
+
+    <a href="./AdminLTEv4/index.html" class="folder-card">
+      AdminLTEv4
+    </a>
+
+    <a href="./Dynamic randering/index.html" class="folder-card">
+      Dynamic randering
+    </a>
+
+    <a href="./Hotel/index.html" class="folder-card">
+      Hotel
+    </a>
+    <a href="./Mario/index.html" class="folder-card">
+      Mario
+    </a>
+    <a href="./studionamma/index.html" class="folder-card">
+      studionamma
+    </a>
+  </div>
+
+</body>
+</html>
